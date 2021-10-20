@@ -7,53 +7,47 @@ import {
     LOAD_TODOS_IN_PROGRESS,
     loadTodosFailure
 } from './actions';
-export const isLoading = (state=false, action) => {
-    const {type} = action;
-    switch(type){
-        case LOAD_TODOS_IN_PROGRESS:
-            return true;
-        case LOAD_TODOS_FAILURE:
-        case LOAD_TODOS_SUCCESS:
-            return false;
-        default:
-            return state;
-    }
-}
+
+const intialState = {isLoading: false, data: []};
 
 
-export const todos = (state=[], action) => {
+export const todos = (state=intialState, action) => {
     const {type, payload} = action;
     switch (type){
         case CREATE_TODO:{
-            const {text} = payload;
+            const {title} = payload;
             const newTodo = {
-                title: text,
+                title,
                 isCompleted: false,
             }
-            return state.concat(newTodo);
+            return { 
+                ...state, data: state.data.concat(newTodo)
+            };
         }
         case REMOVE_TODO:{
             const {text} = payload;
-            return state.filter(todo => todo.title !== text );
+            return {...state, data: state.data.filter(todo => todo.title !== text)};
         }
         case MARK_AS_COMPLETED:{
             const {text} = payload;
-            console.log(text);
-            return state.map(todo => {
-                if (todo.title === text){
-                    return {...todo, isCompleted:true};
-                }
-                return todo;
-            })
+            return {
+                ...state, data: state.data.map(todo => {
+                    if (todo.title === text){
+                        return {...todo, isCompleted:true};
+                    }
+                    return todo;
+                })
+            };
         }
         case LOAD_TODOS_SUCCESS:{
             const {todos} = payload;
-            return todos;
+            return {...state, isLoading:false, data:todos};
         }
         case LOAD_TODOS_IN_PROGRESS:{
-
+            return {...state, isLoading: true};
         }
         case LOAD_TODOS_FAILURE:
+            return {...state, isLoading:false};
         default:
             return state;
             

@@ -3,6 +3,7 @@ import TodoList from './todos/TodoList'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Nav from './nav/nav';
 import Home from './Home/home';
+import Users from './Users/users';
 
 
 const themes = {
@@ -26,6 +27,7 @@ function App() {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/todos' component={TodoList} />
+        <Route path='/users' component={Users} />
       </Switch>
     </div>
     </Router>

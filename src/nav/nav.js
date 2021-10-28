@@ -11,6 +11,9 @@ const Nav = () => (
             <Link to='todos'>
                 <li>todos</li>
             </Link>
+            <Link to='users'>
+                <li>users</li>
+            </Link>
         </ul>
     </nav>
 );
